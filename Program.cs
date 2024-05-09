@@ -13,7 +13,8 @@ namespace TodoGrpc
             builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
             // Add services to the container.
-            builder.Services.AddGrpc();
+            builder.Services.AddGrpc()
+                .AddJsonTranscoding();
 
             var app = builder.Build();
 
