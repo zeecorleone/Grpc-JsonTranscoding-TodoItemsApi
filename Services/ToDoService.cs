@@ -1,10 +1,12 @@
 ﻿using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using TodoGrpc.Data;
 using TodoGrpc.Models;
 
 namespace TodoGrpc.Services;
 
+[Authorize]
 public class ToDoService : ToDoIt.ToDoItBase
 {
     private readonly AppDbContext _dbContext;
