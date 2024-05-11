@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using TodoGrpc.Data;
 using TodoGrpc.Services;
@@ -42,7 +43,13 @@ namespace TodoGrpc
 
                  };
              });
-            builder.Services.AddAuthorization();
+
+            //builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read", policy => policy.RequireClaim("scope", "todoapi.read"));
+                options.AddPolicy("write", policy => policy.RequireClaim("scope", "todoapi.write"));
+            });
 
             var app = builder.Build();
 

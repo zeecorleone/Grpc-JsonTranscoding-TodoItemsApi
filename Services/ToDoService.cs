@@ -15,6 +15,7 @@ public class ToDoService : ToDoIt.ToDoItBase
         _dbContext = dbContext;
     }
 
+    [Authorize(Policy = "write")]
     public override async Task<CreateToDoResponse> CreateToDo(CreateToDoRequest request, ServerCallContext context)
     {
         if (string.IsNullOrWhiteSpace(request.Title) || string.IsNullOrWhiteSpace(request.Description))
@@ -42,6 +43,7 @@ public class ToDoService : ToDoIt.ToDoItBase
         return createResult;
     }
 
+    [Authorize(Policy = "read")]
     public override async Task<ReadToDoResponse> ReadToDo(ReadToDoRequest request, ServerCallContext context)
     {
         if (request is null || request.Id <= 0)
@@ -64,6 +66,7 @@ public class ToDoService : ToDoIt.ToDoItBase
 
     }
 
+    [Authorize(Policy = "read")]
     public override async Task<GetAllResponse> ListToDo(GetAllRequest request, ServerCallContext context)
     {
         var response = new GetAllResponse();
@@ -83,6 +86,7 @@ public class ToDoService : ToDoIt.ToDoItBase
         return await Task.FromResult(response);
     }
 
+    [Authorize(Policy = "write")]
     public override async Task<UpdateToDoResponse> UpdateToDo(UpdateToDoRequest request, ServerCallContext context)
     {
         if(request is null || request.Id <= 0)
@@ -113,6 +117,7 @@ public class ToDoService : ToDoIt.ToDoItBase
         });
     }
 
+    [Authorize(Policy = "write")]
     public override async Task<DeleteToDoResponse> DeleteToDo(DeleteToDoRequest request, ServerCallContext context)
     {
         if (request is null || request.Id <= 0)
